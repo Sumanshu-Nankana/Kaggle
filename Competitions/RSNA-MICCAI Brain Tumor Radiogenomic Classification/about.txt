@@ -1,0 +1,43 @@
+Competition URL : https://www.kaggle.com/c/rsna-miccai-brain-tumor-radiogenomic-classification/data
+
+About: Detect Brain Tumor - MGMT, by using given scanned MRI images
+
+Evaluation : Area Under the ROC curve.
+
+Predict : Probability
+
+train_labels.csv : file containing the target MGMT_value for each subject in the training data (e.g. the presence of MGMT promoter methylation)
+                 : as per this file, we have 585 images in training dataset  (not in increasing number)
+                 
+train/ : folder containing the training files, with each top-level folder representing a subject.
+         train folder - conatins sub-folders (where sub-folder name) is ID of each image.   (we have 585 sub-folders)
+         sub-folder contains - 4 more folders (FLAIR, T1w, T1wCE,T2w)  - These are types of MRI Images
+         
+         To more about these 4 types - https://www.kaggle.com/c/rsna-miccai-brain-tumor-radiogenomic-classification/discussion/252843
+         
+         
+Ideally one main folder - should contain one image for one label
+But here, one folder contains further 4 folders (i.e. type of MRI Images) - we can choose any type (depend which give better result)
+Again, One Type of MRI Images - contains further lot of images for one patient - we can choose any to train the model (which gives better result)
+
+
+All the Images are in .dcm format
+. dcm extension represent digital image which stores medical information of patients such as MRIs, CT scans and ultrasound images. DCM files use DICOM (Digital Imaging and Communications in Medicine) image file format and can include patient's information for reference.
+==============================================================================================================================================
+
+To pass the images into any model, we need to do below things :
+1) All images should be of equal size
+2) Convert it into numpy array
+
+to convert into numpy array, first we need to read the .dcm files.
+Generally to read images, we use open-cv or cv2 module.
+But, cv2 does not support .dcm type files. SO we need specific module to read the.dcm file.
+
+https://answers.opencv.org/question/52181/dicom-images-in-opencv/
+
+we have 'pydicom' library to read dicom files
+pip install pydicom
+
+if we try to plot all images - most of the Images are totally blank
+So, we can say that data-issues
+So, first we need to remove those images and keep only good images
